@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 )
 
@@ -34,16 +35,51 @@ func getWeekNumber(t time.Time, startOfWeek time.Weekday) int {
 	return elapsedWeeks + 1
 }
 
+type Config struct {
+	filePath string
+}
+
+func NewConfig(configPathOverride *string) Config {
+	userHomeDir, err := os.UserHomeDir()
+	if err != nil {
+		fmt.Println("error")
+	}
+
+	return Config{
+		filePath: fmt.Sprintf("%s/%s", userHomeDir, ".status_config"),
+	}
+}
+
+func (c *Config) ReadFile() []byte {
+	dat, err := os.ReadFile(c.filePath)
+	if err != nil {
+		panic(err)
+	}
+	return dat
+}
+
 type SymbolLookup map[rune]string
 
+var lookup = SymbolLookup{
+	'p': ":palm_tree:",
+	'o': ":building:",
+	'h': ":house:",
+	'x': ":question:",
+}
+
 func main() {
+	config := NewConfig(nil)
+	fmt.Println(fmt.Sprintf("%s", string(config.ReadFile())))
+
 	now := time.Now()        // allow prev, next, +n, -n
 	weekStart := time.Sunday // configurable
 
 	weekNumber := getWeekNumber(now, weekStart)
 	result := ""
 	for _, char := range "ppohx" {
-		result += string(charToEmoji(char))
+		if value, ok := lookup[char]; ok {
+			result += value
+		}
 	}
 	fmt.Printf("wk%d: %s", weekNumber, result)
 }

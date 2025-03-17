@@ -1,0 +1,9 @@
+---
+prefix: "wk{week_number}: "
+start: sunday
+symbols:
+    p: 🌴
+    h: 🏠
+    o: 🏢
+    x: 🇺🇸
+    v: ✌️
