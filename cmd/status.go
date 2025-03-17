@@ -51,8 +51,8 @@ func main() {
 	for key, value := range cfg.Symbols {
 		spt[key] = value
 	}
-	prefix := tokenLookup.ResolveString(cfg.Prefix, ctx)
-	resolvedPattern := spt.ResolveString(pattern)
+	prefix := tokenLookup.ResolvePattern(cfg.Prefix, ctx)
+	resolvedPattern := spt.ResolvePattern(pattern)
 	value := fmt.Sprintf("%s%s", prefix, resolvedPattern)
 
 	err = clipboard.WriteAll(value)
