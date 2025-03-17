@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/atotto/clipboard"
 	"github.com/bujiie/slack-status/internal/config"
+	"github.com/bujiie/slack-status/internal/helper"
 	"github.com/bujiie/slack-status/internal/parse"
 	"github.com/bujiie/slack-status/internal/temporal"
 	"github.com/bujiie/slack-status/internal/token"
@@ -12,14 +13,6 @@ import (
 	"strconv"
 	"time"
 )
-
-func AddValues(ctx context.Context, kvPairs map[any]any) context.Context {
-	localCtx := ctx
-	for key, value := range kvPairs {
-		localCtx = context.WithValue(localCtx, key, value)
-	}
-	return localCtx
-}
 
 func getWeekNumberAsString(ctx context.Context) string {
 	return strconv.Itoa(temporal.GetWeekNumber(ctx))
@@ -69,9 +62,11 @@ func main() {
 		panic(err)
 	}
 
-	ctx := AddValues(context.Background(), map[any]any{
-		config.MomentKey:      time.Now().AddDate(0, 0, adjustWeeks*7),
-		config.StartOfWeekKey: temporal.GetDayOfWeek(cfg.Start),
+	ctx := helper.AddValues(context.Background(), map[any]any{
+		config.MomentKey:             time.Now().AddDate(0, 0, adjustWeeks*7),
+		config.StartOfWeekKey:        temporal.GetDayOfWeek(cfg.Start),
+		config.IncDayOfWeekPrefixKey: cfg.IncDayOfWeek,
+		config.IgnoreWeekendKey:      cfg.IgnoreWeekend,
 	})
 
 	var spt token.SymbolProviderTable = cfg.Symbols

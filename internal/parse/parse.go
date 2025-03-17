@@ -20,6 +20,6 @@ func NewParser(vpt *token.ValueProviderTable, spt *token.SymbolProviderTable) Pa
 
 func (p *Parser) Parse(prefixPattern string, symbolPattern string, ctx context.Context) string {
 	prefix := p.Vpt.ResolvePattern(prefixPattern, ctx)
-	resolvedPattern := p.Spt.ResolvePattern(symbolPattern)
+	resolvedPattern := p.Spt.ResolvePattern(symbolPattern, ctx)
 	return fmt.Sprintf("%s%s", prefix, resolvedPattern)
 }

@@ -76,3 +76,25 @@ func GetDayOfWeek(value string) time.Weekday {
 		return time.Sunday
 	}
 }
+
+// GetDayOfWeekAsString returns the string name of the day of the week associated with the time.Weekday.
+func GetDayOfWeekAsString(value time.Weekday) string {
+	switch value {
+	case time.Sunday:
+		return "Sunday"
+	case time.Monday:
+		return "Monday"
+	case time.Tuesday:
+		return "Tuesday"
+	case time.Wednesday:
+		return "Wednesday"
+	case time.Thursday:
+		return "Thursday"
+	case time.Friday:
+		return "Friday"
+	case time.Saturday:
+		return "Saturday"
+	default:
+		return "Unknown"
+	}
+}

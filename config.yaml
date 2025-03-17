@@ -1,9 +1,10 @@
 ---
 prefix: "wk{week_number}: "
 start: sunday
+incDayOfWeek: true
 symbols:
-    p: 🌴
-    h: 🏠
-    o: 🏢
-    x: 🇺🇸
-    v: ✌️
+  p: 🌴
+  h: 🏠
+  o: 🏢
+  x: 🇺🇸
+  v: ✌️

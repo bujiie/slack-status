@@ -35,4 +35,9 @@ func TestGetSTartOfWeek(t *testing.T) {
 		assert.Equal(t, time.Month(1), startOfWeekTime.Month())
 		assert.Equal(t, 1, startOfWeekTime.Day())
 	})
+
+	t.Run("should return day of week name for given time.Weekday", func(t *testing.T) {
+		res := GetDayOfWeekAsString(time.Monday)
+		assert.Equal(t, "Monday", res)
+	})
 }

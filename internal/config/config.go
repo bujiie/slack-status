@@ -8,9 +8,11 @@ import (
 var DefaultFileName = ".status_config"
 
 type Config struct {
-	Prefix  string            `yaml:"prefix"`
-	Start   string            `yaml:"start"`
-	Symbols map[string]string `yaml:"symbols"`
+	Prefix        string            `yaml:"prefix"`
+	Start         string            `yaml:"start" default:"Sunday"`
+	IgnoreWeekend bool              `yaml:"ignoreWeekend"`
+	IncDayOfWeek  bool              `yaml:"incDayOfWeek"`
+	Symbols       map[string]string `yaml:"symbols"`
 }
 
 func ReadYAML(filepath string, out interface{}) error {
@@ -25,6 +27,8 @@ func ReadYAML(filepath string, out interface{}) error {
 type ContextKey string
 
 const (
-	MomentKey      ContextKey = "moment"
-	StartOfWeekKey ContextKey = "startofweek"
+	MomentKey             ContextKey = "moment"
+	StartOfWeekKey        ContextKey = "startofweek"
+	IncDayOfWeekPrefixKey ContextKey = "incdayofweekprefix"
+	IgnoreWeekendKey      ContextKey = "ignoreweekend"
 )
