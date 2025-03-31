@@ -7,7 +7,11 @@ import (
 
 // GetWeekNumber calculates the week number out of the year that contains the
 // time 't' where the start of the week is defined by 'startOfWeek'.
-func GetWeekNumber(_ context.Context, moment time.Time) int {
+func GetWeekNumber(_ context.Context, moment time.Time, offset *int) int {
+	if offset != nil {
+		moment = moment.AddDate(0, 0, 7*(*offset))
+	}
+
 	// get the beginning of the year that includes time 't' in the timezone of
 	// time 't'.
 	startOfYear := time.Date(moment.Year(), time.January, 1, 0, 0, 0, 0, moment.Location())
