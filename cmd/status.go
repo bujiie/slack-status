@@ -29,7 +29,7 @@ func status(ctx context.Context, moment time.Time, args ...string) (*string, err
 	case len(args) > 1:
 		n, err := strconv.Atoi(args[0])
 		if err != nil {
-			return nil, fmt.Errorf(color.Colorize("Error: cannot make status because offset specified does not look like a number (%s).", color.Red), argWeekOffset)
+			return nil, fmt.Errorf(color.Colorize("error: cannot make status because offset specified does not look like a number (%s).", color.Red), argWeekOffset)
 		}
 		argWeekOffset = n
 		argStatusPattern = args[1]
@@ -54,7 +54,7 @@ func main() {
 	}
 	err = clipboard.WriteAll(*result)
 	if err != nil {
-		fmt.Println(fmt.Errorf(color.Colorize("Error: could not copy output to clipboard.", color.Red)))
+		fmt.Println(fmt.Errorf("error: could not copy output to clipboard")) // fmt.Errorf(color.Colorize("Error: could not copy output to clipboard", color.Red)))
 	}
 
 	fmt.Println(*result)
