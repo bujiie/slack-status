@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/atotto/clipboard"
 	"github.com/bujiie/slack-status/internal/color"
 	"github.com/bujiie/slack-status/internal/mapping"
 	"github.com/bujiie/slack-status/internal/temporal"
@@ -51,5 +52,10 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+	err = clipboard.WriteAll(*result)
+	if err != nil {
+		fmt.Println(fmt.Errorf(color.Colorize("Error: could not copy output to clipboard.", color.Red)))
+	}
+
 	fmt.Println(*result)
 }
