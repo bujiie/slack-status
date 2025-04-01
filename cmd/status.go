@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/atotto/clipboard"
 	"github.com/bujiie/slack-status/internal/color"
-	"github.com/bujiie/slack-status/internal/mapping"
+	"github.com/bujiie/slack-status/internal/config"
 	"github.com/bujiie/slack-status/internal/temporal"
 	"github.com/bujiie/slack-status/internal/util"
 	"os"
@@ -13,15 +13,12 @@ import (
 	"time"
 )
 
-var statusMapping = mapping.CharMapping{
-	"o": ":building:",
-	"h": ":house:",
-	"p": ":palm-tree:",
-	"x": ":x:",
-	"v": ":coconut:",
-}
-
 func status(ctx context.Context, moment time.Time, args ...string) (*string, error) {
+	cfg, err := config.ParseConfig(ctx, "./config_sample.yaml")
+	if err != nil {
+		return nil, fmt.Errorf("error: cannot parse config file")
+	}
+
 	argWeekOffset := 0
 	argStatusPattern := ""
 
@@ -39,7 +36,7 @@ func status(ctx context.Context, moment time.Time, args ...string) (*string, err
 
 	mappedPattern := ""
 	for _, char := range argStatusPattern {
-		mappedPattern += statusMapping.GetMapping(ctx, string(char))
+		mappedPattern += cfg.Get(string(char))
 	}
 
 	weekNumber := temporal.GetWeekNumber(ctx, moment, util.IntToPointer(argWeekOffset))
